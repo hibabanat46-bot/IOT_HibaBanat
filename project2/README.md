@@ -1,4 +1,4 @@
-"C:\Users\USER\Downloads\Report-2.docx"
+[day 2 report](https://github.com/hibabanat46-bot/IOT_HibaBanat/blob/main/project2/Report-2.docx)
 
 1. Project Overview
 The purpose of this project is to demonstrate the use of both digital and analog inputs with the ESP32 microcontroller. The system combines an infrared (IR) obstacle sensor and a potentiometer to control the brightness of an LED using Pulse Width Modulation (PWM). All sensor readings, the calculated voltage, and the resulting PWM duty cycle are displayed in real time through the Serial Monitor for monitoring and debugging.
