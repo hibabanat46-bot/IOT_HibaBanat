@@ -10,10 +10,10 @@ Adafruit_BME280 bme;
 WebServer server(80);
 unsigned long lastLog = 0;
 
-// ===== ضع اسم الشبكة وكلمة المرور هنا =====
+
 const char* ssid = "CYBER_EXT";
 const char* password = "cyberap2025";
-// =========================================
+
 
 
 void handleRoot()
@@ -344,7 +344,7 @@ Serial.println("SPIFFS Ready");
 
 SPIFFS.remove("/log.csv");
 
-// Create CSV file with header if it doesn't exist
+
 if (!SPIFFS.exists("/log.csv"))
 {
     File file = SPIFFS.open("/log.csv", FILE_WRITE);
@@ -358,7 +358,7 @@ if (!SPIFFS.exists("/log.csv"))
     }
 }
 
-    // تشغيل WiFi
+    // WiFi
     WiFi.mode(WIFI_STA);
 
     Serial.print("Connecting to WiFi");
@@ -382,7 +382,7 @@ if (!SPIFFS.exists("/log.csv"))
 Serial.println("Web Server Started");
 
 
-    // تشغيل حساس BME280
+    // BME280
     if (!bme.begin(0x76))
     {
         Serial.println("Could not find BME280 sensor!");
