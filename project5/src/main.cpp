@@ -101,6 +101,23 @@ h1{
     margin-bottom:20px;
 }
 
+.timestamp{
+    margin-top:20px;
+    font-size:18px;
+    color:#555;
+}
+    .green{
+    background:#c8f7c5;
+}
+
+.yellow{
+    background:#fff3b0;
+}
+
+.red{
+    background:#ffb3b3;
+}
+
 </style>
 
 </head>
@@ -118,6 +135,47 @@ function updateData()
 
         document.getElementById("pres").innerHTML = data.pressure;
 
+        // Temperature
+let t = parseFloat(data.temperature);
+
+document.getElementById("tempCard").className = "card";
+
+if(t < 20)
+    document.getElementById("tempCard").classList.add("green");
+else if(t < 30)
+    document.getElementById("tempCard").classList.add("yellow");
+else
+    document.getElementById("tempCard").classList.add("red");
+
+// Humidity
+let h = parseFloat(data.humidity);
+
+document.getElementById("humCard").className = "card";
+
+if(h >= 30 && h <= 60)
+    document.getElementById("humCard").classList.add("green");
+else if(h >= 20 && h <= 70)
+    document.getElementById("humCard").classList.add("yellow");
+else
+    document.getElementById("humCard").classList.add("red");
+
+// Pressure
+let p = parseFloat(data.pressure);
+
+document.getElementById("presCard").className = "card";
+
+if(p >= 880&& p <= 920)
+    document.getElementById("presCard").classList.add("green");
+else if(p >= 860 && p <= 880)
+    document.getElementById("presCard").classList.add("yellow");
+else
+    document.getElementById("presCard").classList.add("red");
+
+
+        const now = new Date();
+        document.getElementById("time").innerHTML =
+        now.toLocaleTimeString();
+
     });
 }
 
@@ -131,6 +189,11 @@ setInterval(updateData,10000);
 
 <h1>🌍THE WEATHER</h1>
 
+<div class="timestamp">
+Last Update:
+<span id="time">--:--:--</span>
+</div>
+
 )rawliteral";
 
 html += "<div class='weatherIcon'>" + icon + "</div>";
@@ -140,7 +203,7 @@ html += R"rawliteral(
 
 <div class="container">
 
-<div class="card">
+<div class="card" id="tempCard">
 <h2>🌡 Temperature</h2>
 
 <div class="value" id="temp">
@@ -155,7 +218,7 @@ html += R"rawliteral(
 
 </div>
 
-<div class="card">
+<div class="card" id="humCard">
 
 <h2>💧 Humidity</h2>
 
@@ -171,7 +234,7 @@ html += R"rawliteral(
 
 </div>
 
-<div class="card">
+<div class="card" id="presCard">
 
 <h2>🌤 Pressure</h2>
 
