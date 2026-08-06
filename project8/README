@@ -1,0 +1,199 @@
+# ESP32 Smart Motor Control & Environmental Monitoring using MQTT
+
+## Overview
+
+This project is an IoT-based system that combines environmental monitoring with remote DC motor control using an ESP32, MQTT protocol, and a BME280 sensor.
+
+The ESP32 continuously publishes environmental data (temperature, humidity, and pressure) to an MQTT Broker while simultaneously receiving commands to control a DC motor's power, direction, and speed.
+
+The system demonstrates bidirectional MQTT communication, making it suitable for Industrial IoT, Smart Factory, and Smart Home applications.
+
+---
+
+## Features
+
+### Environmental Monitoring
+
+- Read Temperature using BME280
+- Read Humidity using BME280
+- Read Atmospheric Pressure
+- Publish sensor data every 5 seconds
+
+### DC Motor Control
+
+- Turn motor ON/OFF remotely
+- Change motor direction (Forward / Reverse)
+- Control motor speed using PWM (0–100%)
+
+### MQTT Communication
+
+Publish Topics
+
+| Topic | Description |
+|--------|-------------|
+| home/esp32/sensor/temperature | Temperature (°C) |
+| home/esp32/sensor/humidity | Humidity (%) |
+| home/esp32/sensor/pressure | Pressure (hPa) |
+| home/esp32/status/motor | Motor Status |
+| home/esp32/status/direction | Current Direction |
+| home/esp32/status/speed | Current Speed |
+
+Subscribe Topics
+
+| Topic | Payload |
+|--------|----------|
+| home/esp32/motor/power | ON / OFF |
+| home/esp32/motor/direction | FORWARD / REVERSE |
+| home/esp32/motor/speed | 0–100 |
+
+---
+
+## Hardware Components
+
+- ESP32 Dev Module
+- BME280 Temperature/Humidity/Pressure Sensor
+- L298N Motor Driver
+- TT DC Gear Motor
+- 5V Power Supply
+- Jumper Wires
+- Breadboard
+
+---
+
+## Software
+
+- PlatformIO
+- Visual Studio Code
+- MQTT Broker (Mosquitto)
+- MQTTX
+- PubSubClient Library
+- Adafruit BME280 Library
+
+---
+
+## Wiring
+
+### BME280
+
+| BME280 | ESP32 |
+|---------|-------|
+| VCC | 3.3V |
+| GND | GND |
+| SDA | GPIO21 |
+| SCL | GPIO22 |
+
+---
+
+### Motor Driver (L298N)
+
+| L298N | ESP32 |
+|--------|-------|
+| ENA | GPIO25 |
+| IN1 | GPIO26 |
+| IN2 | GPIO27 |
+| GND | GND |
+
+Power Connections
+
+- Motor Power → External 5V Supply
+- L298N GND → ESP32 GND (Common Ground)
+
+---
+
+## Project Architecture
+
+```
+             +----------------+
+             |     MQTTX      |
+             +--------+-------+
+                      |
+               MQTT Commands
+                      |
+                      |
+              +-------v--------+
+              |   Mosquitto    |
+              | MQTT Broker    |
+              +-------+--------+
+                      |
+        +-------------+--------------+
+        |                            |
+        |                            |
++-------v--------+           +--------v--------+
+|     ESP32      |           |    MQTT Client  |
+|                |           |   (Subscriber)  |
+|  MQTT Client   |           +-----------------+
+|                |
+|  BME280 Sensor |
+|                |
+|  L298N Driver  |
+|                |
+|   DC Motor     |
++----------------+
+```
+
+---
+
+## MQTT Workflow
+
+1. ESP32 connects to WiFi.
+2. ESP32 connects to Mosquitto Broker.
+3. ESP32 publishes sensor readings every 5 seconds.
+4. MQTT clients subscribe to sensor topics.
+5. User sends motor commands through MQTTX.
+6. ESP32 receives commands and controls the motor.
+7. ESP32 publishes current motor status.
+
+---
+
+## Libraries
+
+```cpp
+WiFi.h
+PubSubClient.h
+Wire.h
+Adafruit_Sensor.h
+Adafruit_BME280.h
+```
+
+---
+
+## Future Improvements
+
+- Web Dashboard
+- Mobile Application
+- Data Logging to Database
+- Cloud MQTT Broker
+- OTA Firmware Updates
+- Multiple Motor Support
+- Automatic Control Mode
+- Sensor Alerts
+
+---
+
+## Project Structure
+
+```
+.
+├── src
+│   └── main.cpp
+│
+├── include
+│
+├── platformio.ini
+│
+└── README.md
+```
+
+---
+
+## Developed By
+
+**Hiba Banat**
+
+Mechatronics Engineering
+
+---
+
+## License
+
+This project is developed for educational purposes.
